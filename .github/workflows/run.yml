@@ -1,0 +1,34 @@
+name: NATA AI Automatic Dataset Scraper
+
+on:
+  schedule:
+    # Sa'aatii sa'aatiidhaan otomaatikiin akka ka'uuf
+    - cron: '0 * * * *'
+  workflow_dispatch: # Button manwaliin fiigsusuu siif kenna
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests google-generativeai firebase-admin
+
+      - name: Run NATA AI Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python app.py
