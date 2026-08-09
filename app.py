@@ -1,11 +1,4 @@
-import os
-import time
-import json
-import hashlib
-import re
-import requests
-import google.generativeai as genai
-import firebase_admin
+port firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime, timezone
 
