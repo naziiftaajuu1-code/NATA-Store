@@ -7,7 +7,6 @@ import requests
 import google.generativeai as genai
 import firebase_admin
 from firebase_admin import credentials, firestore
-from datetime import datetime, timezone
 
 # ============ CONFIGURATION & CHANNELS ============
 DEFAULT_CHANNELS = [
@@ -151,7 +150,6 @@ Input batch for processing:
 """
 
     try:
-        # Gemini 2.5 Flash Model
         model = genai.GenerativeModel("gemini-2.5-flash")
         response = model.generate_content(
             prompt,
@@ -200,7 +198,7 @@ def save_to_firestore(item):
         })
         return True
     except Exception as e:
-        print(f"[!] Firestore Save Error (Create database in Firebase Console): {e}")
+        print(f"[!] Firestore Save Error: {e}")
         return False
 
 # ============ TELEGRAM REPORTING ============
@@ -275,4 +273,4 @@ def run_pipeline():
 
 if __name__ == "__main__":
     print("[=== NATA AI Dataset Worker Execution Started ===]")
-    run_pipeline()       
+    run_pipeline()
